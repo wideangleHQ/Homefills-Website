@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Homefills design tokens (Design.md §2, §19.1). Every colour in the app comes
+ * from these variables; the HEX values are the approved brand palette.
+ */
+:root {
+  --hf-bg: #fefcb9;
+  --hf-yellow: #e2b60b;
+  --hf-purple: #902e91;
+  --hf-orange: #db9444;
+  --hf-white: #fdfdfc;
+  --hf-text: #282522;
+  --hf-text-muted: #716b58;
+  --hf-border: #e5dfa5;
+  --hf-surface-soft: #fffde0;
+  --hf-disabled: #f1edc7;
+  --hf-peach: #ffe5d4; /* light text on purple (5.83:1) */
+
+  --hf-purple-hover: #7a2579;
+  --hf-purple-pressed: #6b1f6c;
+  --hf-purple-tint: rgb(144 46 145 / 0.08);
+  --hf-on-purple: #fdfdfc;
+  --hf-success: #2f6b3a;
+  --hf-warning: #7a5200;
+  --hf-error: #b3261e;
+
+  --header-h: 4rem;
+  --bottom-nav-h: 4rem;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* shadcn/ui tokens mapped onto the brand palette */
+  --background: var(--hf-bg);
+  --foreground: var(--hf-text);
+  --card: var(--hf-white);
+  --card-foreground: var(--hf-text);
+  --popover: var(--hf-white);
+  --popover-foreground: var(--hf-text);
+  --primary: var(--hf-purple);
+  --primary-foreground: var(--hf-on-purple);
+  --secondary: var(--hf-surface-soft);
+  --secondary-foreground: var(--hf-text);
+  --muted: var(--hf-surface-soft);
+  --muted-foreground: var(--hf-text-muted);
+  --accent: var(--hf-surface-soft);
+  --accent-foreground: var(--hf-text);
+  --destructive: var(--hf-error);
+  --border: var(--hf-border);
+  --input: var(--hf-text-muted);
+  --ring: var(--hf-purple);
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-canvas: var(--hf-bg);
+  --color-turmeric: var(--hf-yellow);
+  --color-purple: var(--hf-purple);
+  --color-purple-hover: var(--hf-purple-hover);
+  --color-purple-pressed: var(--hf-purple-pressed);
+  --color-purple-tint: var(--hf-purple-tint);
+  --color-orange: var(--hf-orange);
+  --color-surface: var(--hf-white);
+  --color-ink: var(--hf-text);
+  --color-subtle: var(--hf-text-muted);
+  --color-line: var(--hf-border);
+  --color-soft: var(--hf-surface-soft);
+  --color-disabled: var(--hf-disabled);
+  --color-peach: var(--hf-peach);
+  --color-success: var(--hf-success);
+  --color-warning: var(--hf-warning);
+  --color-error: var(--hf-error);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, Arial, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, Arial, sans-serif;
+  --font-serif: var(--font-proza), ui-serif, Georgia, serif;
+
+  /* Fluid type scale */
+  --text-display: clamp(2.375rem, 1.55rem + 3.3vw, 4.5rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.02em;
+  --text-h2: clamp(1.875rem, 1.4rem + 1.9vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.6;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+
+  --shadow-float: 0 12px 32px -12px rgb(40 37 34 / 0.22);
+  --ease-soft: var(--ease-out-soft);
+}
+
+/* Page container: 16 → 96px gutters (design.md §4), max 1520px. */
+@utility container-page {
+  width: 100%;
+  max-width: 95rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 30rem) {
+    padding-inline: 1.25rem;
+  }
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+  @media (width >= 96rem) {
+    padding-inline: 6rem;
+  }
+}
+
+/* Vertical section rhythm: 40 → 96px (design.md §4). */
+@utility section-y {
+  padding-block: 2.5rem;
+  @media (width >= 48rem) {
+    padding-block: 4rem;
+  }
+  @media (width >= 64rem) {
+    padding-block: 6rem;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--hf-purple);
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--hf-purple);
+    color: var(--hf-on-purple);
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--hf-purple);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* On turmeric the purple ring is only 3.66:1, so use charcoal (Design.md 13.2). */
+.on-purple :focus-visible {
+  outline-color: var(--hf-peach);
+}
+
+.on-turmeric :focus-visible {
+  outline-color: var(--hf-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
