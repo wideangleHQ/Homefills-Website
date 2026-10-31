@@ -5,7 +5,6 @@ import { BottomNav } from "@/components/layout/bottom-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
-import { CartSheet } from "@/components/store/cart-sheet";
 import { QuickViewDialog } from "@/components/store/quick-view-dialog";
 import { SearchDialog } from "@/components/store/search-dialog";
 import { StoreProvider } from "@/components/store/store-provider";
@@ -71,7 +70,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </main>
             <SiteFooter />
             <BottomNav />
-            <CartSheet />
             <QuickViewDialog />
             <SearchDialog />
           </SmoothScroll>

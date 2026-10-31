@@ -24,7 +24,7 @@ function Item({ icon: Icon, label, active }: { icon: LucideIcon; label: string; 
 /** Mobile/tablet navigation (design.md §11). Hidden from lg up, where the header nav takes over. */
 export function BottomNav() {
   const pathname = usePathname();
-  const { cartCount, setCartOpen, setSearchOpen } = useStore();
+  const { cartCount, setSearchOpen } = useStore();
 
   const links = [
     { label: "Home", href: "/", icon: House },
@@ -54,15 +54,15 @@ export function BottomNav() {
           </button>
         </li>
         <li className="flex min-w-0 flex-1">
-          <button
-            type="button"
+          <Link
+            href="/cart"
             className={itemClass}
+            aria-current={pathname === "/cart" ? "page" : undefined}
             aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
-            onClick={() => setCartOpen(true)}
           >
-            <Item icon={ShoppingBag} label="Cart" />
+            <Item icon={ShoppingBag} label="Cart" active={pathname === "/cart"} />
             {cartCount > 0 && <CountBadge count={cartCount} className="top-2 right-[calc(50%-1.25rem)]" />}
-          </button>
+          </Link>
         </li>
       </ul>
     </nav>

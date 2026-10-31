@@ -11,13 +11,10 @@ type Store = {
   cart: CartLine[];
   cartCount: number;
   addToCart: (product: Product, quantity?: number) => void;
-  setQuantity: (productId: string, quantity: number) => void;
   /** Quantity of one product in the cart (0 when absent). */
   quantityOf: (productId: string) => number;
   /** Set a product's quantity directly, adding or removing the line as needed. Does not open the cart. */
   setProductQuantity: (product: Product, quantity: number) => void;
-  cartOpen: boolean;
-  setCartOpen: (open: boolean) => void;
   quickView: Product | null;
   openQuickView: (product: Product | null) => void;
   searchOpen: boolean;
@@ -29,7 +26,6 @@ const StoreContext = createContext<Store | null>(null);
 // ponytail: in-memory demo cart, resets on reload; persist when real checkout lands.
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartLine[]>([]);
-  const [cartOpen, setCartOpen] = useState(false);
   const [quickView, openQuickView] = useState<Product | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -42,15 +38,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         : [...lines, { product, quantity }],
     );
     openQuickView(null);
-    setCartOpen(true);
   };
-
-  const setQuantity = (productId: string, quantity: number) =>
-    setCart((lines) =>
-      quantity < 1
-        ? lines.filter((l) => l.product.id !== productId)
-        : lines.map((l) => (l.product.id === productId ? { ...l, quantity } : l)),
-    );
 
   const quantityOf = (productId: string) => cart.find((l) => l.product.id === productId)?.quantity ?? 0;
 
@@ -68,11 +56,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     cart,
     cartCount: cart.reduce((n, l) => n + l.quantity, 0),
     addToCart,
-    setQuantity,
     quantityOf,
     setProductQuantity,
-    cartOpen,
-    setCartOpen,
     quickView,
     openQuickView,
     searchOpen,

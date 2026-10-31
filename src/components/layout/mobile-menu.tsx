@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useStore } from "@/components/store/store-provider";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { categories, categoryHref } from "@/data/catalog";
 import { primaryNav } from "@/config/navigation";
@@ -18,7 +18,7 @@ import { CountBadge } from "./site-header";
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { cartCount, setCartOpen, setSearchOpen } = useStore();
+  const { cartCount, setSearchOpen } = useStore();
 
   const handleNavClick = () => {
     setOpen(false);
@@ -38,16 +38,15 @@ export function MobileMenu() {
       </Button>
 
       {/* Cart trigger */}
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        className="relative text-purple hover:text-purple-hover"
+      <Link
+        href="/cart"
+        aria-current={pathname === "/cart" ? "page" : undefined}
+        className={buttonVariants({ variant: "ghost", size: "icon-sm", className: "relative text-purple hover:text-purple-hover" })}
         aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
-        onClick={() => setCartOpen(true)}
       >
         <ShoppingBag className="size-5" />
         {cartCount > 0 && <CountBadge count={cartCount} />}
-      </Button>
+      </Link>
 
       {/* Hamburger menu button */}
       <Button

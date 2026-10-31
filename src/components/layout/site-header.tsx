@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useStore } from "@/components/store/store-provider";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { primaryNav } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +17,7 @@ import { MobileMenu } from "./mobile-menu";
 export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const { cartCount, setCartOpen, setSearchOpen } = useStore();
+  const { cartCount, setSearchOpen } = useStore();
   const [scrolledBeyondHero, setScrolledBeyondHero] = useState(!isHome);
 
   useEffect(() => {
@@ -97,16 +97,15 @@ export function SiteHeader() {
           >
             <Search className="size-5" />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative text-purple hover:text-purple-hover"
+          <Link
+            href="/cart"
+            aria-current={pathname === "/cart" ? "page" : undefined}
+            className={buttonVariants({ variant: "ghost", size: "icon", className: "relative text-purple hover:text-purple-hover" })}
             aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
-            onClick={() => setCartOpen(true)}
           >
             <ShoppingBag className="size-5" />
             {cartCount > 0 && <CountBadge count={cartCount} />}
-          </Button>
+          </Link>
         </div>
 
         {/* Mobile controls including hamburger menu */}
