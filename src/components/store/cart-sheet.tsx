@@ -6,13 +6,17 @@ import Link from "next/link";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { OfferProgress } from "@/components/cart/offer-progress";
 import { formatPrice, getCategory } from "@/data/catalog";
+import { demoOffers } from "@/data/offers";
+import { priceCart } from "@/lib/cart-pricing";
 
 import { QuantityStepper } from "./quantity-stepper";
 import { useStore } from "./store-provider";
 
 export function CartSheet() {
   const { cart, cartCount, cartOpen, setCartOpen, setQuantity } = useStore();
+  const pricing = priceCart(cart, demoOffers);
 
   return (
     <Sheet open={cartOpen} onOpenChange={setCartOpen}>
@@ -23,6 +27,12 @@ export function CartSheet() {
             {cartCount === 0 ? "Nothing added yet." : `${cartCount} ${cartCount === 1 ? "item" : "items"}`}
           </SheetDescription>
         </SheetHeader>
+
+        {cart.length > 0 && (
+          <div className="border-b border-line px-5 py-4">
+            <OfferProgress pricing={pricing} offers={demoOffers} compact />
+          </div>
+        )}
 
         {cart.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
@@ -72,15 +82,16 @@ export function CartSheet() {
         {cart.length > 0 && (
           <SheetFooter className="gap-3 border-t border-line px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
             <p className="flex items-baseline justify-between font-heading font-semibold text-ink">
-              <span>Subtotal (demo prices)</span>
-              <span className="tabular-nums text-purple">
-                {formatPrice(cart.reduce((sum, l) => sum + l.product.price * l.quantity, 0))}
-              </span>
+              <span>To pay (demo prices)</span>
+              <span className="tabular-nums text-purple">{formatPrice(pricing.total)}</span>
             </p>
-            <p className="text-sm text-ink">Checkout is unavailable in this demo. No orders are processed.</p>
-            <Button disabled className="w-full">
-              Checkout unavailable in demo
-            </Button>
+            <Link
+              href="/cart"
+              onClick={() => setCartOpen(false)}
+              className={buttonVariants({ className: "w-full" })}
+            >
+              View cart and offers
+            </Link>
             <Link
               href="/shop"
               onClick={() => setCartOpen(false)}

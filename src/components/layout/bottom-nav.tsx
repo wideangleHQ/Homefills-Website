@@ -9,7 +9,7 @@ import { useStore } from "@/components/store/store-provider";
 import { CountBadge } from "./site-header";
 
 const itemClass =
-  "relative flex h-(--bottom-nav-h) flex-1 flex-col items-center justify-center gap-1 font-heading text-[0.6875rem] font-medium text-subtle transition-colors duration-150 aria-[current=page]:text-purple";
+  "relative flex h-(--bottom-nav-h) min-w-0 flex-1 flex-col items-center justify-center gap-1 font-heading text-[0.6875rem] font-medium text-subtle transition-colors duration-150 aria-[current=page]:text-purple";
 
 function Item({ icon: Icon, label, active }: { icon: LucideIcon; label: string; active?: boolean }) {
   return (
@@ -41,19 +41,19 @@ export function BottomNav() {
         {links.map((l) => {
           const active = l.href === pathname;
           return (
-            <li key={l.href} className="flex flex-1">
+            <li key={l.href} className="flex min-w-0 flex-1">
               <Link href={l.href} aria-current={active ? "page" : undefined} className={itemClass}>
                 <Item icon={l.icon} label={l.label} active={active} />
               </Link>
             </li>
           );
         })}
-        <li className="flex flex-1">
+        <li className="flex min-w-0 flex-1">
           <button type="button" className={itemClass} onClick={() => setSearchOpen(true)}>
             <Item icon={Search} label="Search" />
           </button>
         </li>
-        <li className="flex flex-1">
+        <li className="flex min-w-0 flex-1">
           <button
             type="button"
             className={itemClass}

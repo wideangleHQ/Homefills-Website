@@ -24,7 +24,7 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative flex h-[calc(100svh-var(--bottom-nav-h)-env(safe-area-inset-bottom,0px))] sm:h-auto sm:min-h-svh w-full flex-col justify-between overflow-hidden bg-[#F4E4C1] pt-24 min-[375px]:pt-28 pb-3 sm:pt-32 sm:pb-6 lg:pt-36 lg:pb-8"
+      className="relative flex h-[calc(100svh-var(--bottom-nav-h)-env(safe-area-inset-bottom,0px))] sm:h-auto sm:min-h-svh w-full flex-col justify-between overflow-hidden bg-[#F4E4C1] pt-24 min-[375px]:pt-28 pb-3 sm:pt-32 sm:pb-6 lg:pt-[clamp(6rem,13.33svh,9rem)] lg:pb-8"
     >
       {/* 1. Mobile full-screen portrait visual (9:16) */}
       <div className="absolute inset-0 z-0 sm:hidden pointer-events-none">
