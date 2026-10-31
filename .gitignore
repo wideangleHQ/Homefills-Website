@@ -39,3 +39,20 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# OS files (Windows / macOS)
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# logs
+*.log
+
+# Claude Code local-only settings
+.claude/settings.local.json
